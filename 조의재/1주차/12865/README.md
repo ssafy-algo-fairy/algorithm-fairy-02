@@ -35,3 +35,32 @@ for(int i=1; i<=N; i++){
 
 
 ⏱️ 시간 복잡도 분석물건의 개수 $N$과 배낭의 최대 무게 $K$를 모두 순회하므로 **$O(N \times K)$**의 시간 복잡도를 가집니다.문제 제한 범위($N \le 100, K \le 100,000$) 내에서 약 1,000만 번의 연산이 발생하므로 2초라는 시간 제한 안에 충분히 통과 가능합니다.
+
+
+개선 코드
+```
+public static void main(String args[]) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        // 1차원 DP 배열: dp[w]는 무게 w일 때의 최대 가치
+        int[] dp = new int[K + 1];
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int W = Integer.parseInt(st.nextToken());
+            int V = Integer.parseInt(st.nextToken());
+
+            // 거꾸로 순회해야 이전 물건의 결과값(i-1 상태)을 덮어쓰지 않고 활용할 수 있음
+            for (int j = K; j >= W; j--) {
+                dp[j] = Math.max(dp[j], dp[j - W] + V);
+            }
+        }
+
+        System.out.println(dp[K]);
+    }
+
+```
