@@ -28,8 +28,8 @@ public class Main {
 		}
 		
 		alphabet = new boolean[26]; // 지나온 알파벳인지
-		alphabet[arr[0][0] - 'A'] = true;
-		dfs(0, 0, 1);
+		alphabet[arr[0][0] - 'A'] = true; // 좌측 상단 알파벳 방문 먼저 하고
+		dfs(0, 0, 1); // 탐색 시작
 		System.out.println(answer);
 	}
 
