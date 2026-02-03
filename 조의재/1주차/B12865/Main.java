@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class P_12865 {
+class Main {
     static class Node{
         int W;
         int V;
