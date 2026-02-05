@@ -1,0 +1,68 @@
+# [BJ 12865] 평범한 배낭 - Java
+
+
+
+### 📋 문제 개요
+- **알고리즘 유형**: 다이나믹 프로그래밍 (Dynamic Programming)
+- **문제 핵심**: 전형적인 0/1 Knapsack(배낭 채우기) 문제입니다. 물건을 쪼갤 수 없으므로, 각 물건을 넣었을 때와 넣지 않았을 때의 가치를 비교하여 최댓값을 구합니다.
+
+---
+
+### 💡 풀이 로직
+1. **데이터 구조**: `Node` 클래스를 생성하여 각 물건의 무게($W$)와 가치($V$)를 묶어서 관리했습니다.
+2. **DP 테이블 정의**: `dp[i][j]`는 `i`번째 물건까지 고려했을 때, 배낭의 무게 한도가 `j`일 때의 최대 가치를 의미합니다.
+3. **점화식**:
+   - 현재 배낭 무게 한도가 물건의 무게보다 크거나 같을 때:
+     `dp[i][j] = Math.max(dp[i-1][j - 무게] + 가치, dp[i-1][j])`
+   - 현재 배낭 무게 한도가 물건의 무게보다 작을 때:
+     `dp[i][j] = dp[i-1][j]`
+
+---
+
+### 💻 코드 주요 부분 설명
+```java
+for(int i=1; i<=N; i++){
+    for(int j=0; j<=K; j++){
+        Node now = info[i];
+        if(j - now.W >= 0){
+            // 1. 현재 물건을 담는 경우와 담지 않는 경우 중 가치가 큰 쪽 선택
+            dp[i][j] = Math.max(dp[i-1][j-now.W] + now.V, dp[i-1][j]);
+        } else {
+            // 2. 현재 무게 제한으로 물건을 담을 수 없다면 이전 값을 그대로 가져옴
+            dp[i][j] = dp[i-1][j];
+        }
+    }
+}
+```
+
+
+⏱️ 시간 복잡도 분석물건의 개수 $N$과 배낭의 최대 무게 $K$를 모두 순회하므로 **$O(N \times K)$**의 시간 복잡도를 가집니다.문제 제한 범위($N \le 100, K \le 100,000$) 내에서 약 1,000만 번의 연산이 발생하므로 2초라는 시간 제한 안에 충분히 통과 가능합니다.
+
+
+개선 코드
+```
+public static void main(String args[]) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        // 1차원 DP 배열: dp[w]는 무게 w일 때의 최대 가치
+        int[] dp = new int[K + 1];
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int W = Integer.parseInt(st.nextToken());
+            int V = Integer.parseInt(st.nextToken());
+
+            // 거꾸로 순회해야 이전 물건의 결과값(i-1 상태)을 덮어쓰지 않고 활용할 수 있음
+            for (int j = K; j >= W; j--) {
+                dp[j] = Math.max(dp[j], dp[j - W] + V);
+            }
+        }
+
+        System.out.println(dp[K]);
+    }
+
+```
