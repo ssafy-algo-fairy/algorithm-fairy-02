@@ -43,10 +43,10 @@ public class Main {
       int minusType = circleArr[i - 1];
       int plusType = circleArr[i + k - 1];
 
-      if (--cntArr[minusType] == 0)
-        typeNum--;
       if (++cntArr[plusType] == 1)
         typeNum++;
+      if (--cntArr[minusType] == 0)
+        typeNum--;
       if (maxNum < typeNum)
         maxNum = typeNum;
       if (maxNum == k + 1)
