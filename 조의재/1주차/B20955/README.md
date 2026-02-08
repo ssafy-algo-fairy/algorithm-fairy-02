@@ -44,7 +44,6 @@ for(int i=1; i<=N; i++){
 }
 ```
 
-
 ✅ 복기 및 핵심 포인트
 Union-Find의 효율성: 경로 압축(parent[x] = find(parent[x]))을 통해 $O(M \alpha(N))$의 빠른 속도로 사이클을 판별할 수 있었습니다.
 
