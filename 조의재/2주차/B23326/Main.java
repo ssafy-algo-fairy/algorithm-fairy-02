@@ -3,7 +3,6 @@ import java.util.*;
 
 public class B23326{
     static int N, Q;
-    static int arr[];
     static StringBuilder sb;
     static TreeSet<Integer> ts;
     
