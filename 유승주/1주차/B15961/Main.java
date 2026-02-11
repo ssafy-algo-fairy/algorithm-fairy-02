@@ -18,7 +18,7 @@ public class Main {
     c = Integer.parseInt(st.nextToken()); // c: 쿠폰번호
 
     // 초밥 배열 받기 - 시간복잡도 O(N)
-    circleArr = new int[2 * N]; // 원형배열을 만들기 위해 2N크기
+    circleArr = new int[N+k]; // 원형배열을 만들기 위해 N + k
     for (int i = 0; i < N; i++) {
       circleArr[i] = Integer.parseInt(br.readLine());
       if (i < k - 1)
