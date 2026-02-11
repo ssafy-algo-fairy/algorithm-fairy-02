@@ -30,7 +30,7 @@ public class Main  {
 			}
 			selected[dish[i]]++;
 		}
-		max_sel = Math.max(max_sel, selected[c] == 0 ? num_sel + 1 : num_sel);
+		max_sel = selected[c] == 0 ? num_sel + 1 : num_sel;
 		if (n == k) {
 			System.out.println(selected[c] == 0 ? max_sel + 1 : max_sel);
 			return ;
