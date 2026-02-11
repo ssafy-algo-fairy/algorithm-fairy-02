@@ -6,7 +6,6 @@ public class Main{
     static int N,M,L,K;
     static int[][] star;
     static int ans;
-    static final int INF = 1<<31;
     public static void main(String args[])throws IOException{
         readInput();
         System.out.println(sb);
