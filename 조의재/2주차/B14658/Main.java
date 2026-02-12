@@ -31,8 +31,8 @@ public class Main{
             star[k][1] = Integer.parseInt(st.nextToken()); //y
         }
 
-        for(int i=1;i<K;i++){
-            for(int j=0; j<i; j++){
+        for(int i=0;i<K;i++){
+            for(int j=0; j<=i; j++){
                 int minX = Math.min(star[i][0], star[j][0]);
                 int minY = Math.min(star[i][1], star[j][1]);
 
