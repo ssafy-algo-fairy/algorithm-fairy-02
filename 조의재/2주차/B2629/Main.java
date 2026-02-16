@@ -3,11 +3,14 @@ import java.io.*;
 
 public class Main {
     static int N, M;
-    static int[] price;
     static StringBuilder sb;
+    static int[] weight, marbles;
+    static boolean[][] dp;
+    static int total;
 
     public static void main(String[] args) throws IOException {
         inputFile();
+        makeDp();
         solution();
         System.out.println(sb.toString().trim());
     }
@@ -18,50 +21,46 @@ public class Main {
         sb = new StringBuilder();
 
         N = Integer.parseInt(br.readLine());
-        price = new int[N];
+        weight = new int[N + 1];
+        total = 0;
 
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<N; i++){
-            price[i] = Integer.parseInt(st.nextToken());
+        for (int i = 1; i <= N; i++) {
+            weight[i] = Integer.parseInt(st.nextToken());
+            total += weight[i];
         }
-        M = Integer.parseInt(st.nextToken());
+
+        M = Integer.parseInt(br.readLine());
+        marbles = new int[M];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < M; i++) {
+            marbles[i] = Integer.parseInt(st.nextToken());
+        }
     }
 
-    public static void solution(){
-        int minIdx = 0;
-        int totalMoney = M;
+    public static void makeDp() {
+        dp = new boolean[N + 1][total + 1];
+        dp[0][0] = true;
 
-        for(int i=1; i<N; i++){
-            if(price[minIdx] > price[i]) minIdx = i;
-        }
-        
-        if(minIdx == 0){ 
-            int secondMinIdx = 1;
-            for(int i=2; i<N; i++){
-                if(price[secondMinIdx] > price[i]) secondMinIdx = i;
-            }
-            sb.append(secondMinIdx);
-            totalMoney -= price[secondMinIdx];
-        }
-
-        int length = totalMoney / price[minIdx];
-        for(int i=0; i<length; i++){
-            sb.append(minIdx);
-            totalMoney -= price[minIdx];
-        }
-        // 여기까지 세팅
-
-        for(int i=0; i < length; i++){
-            for(int j=N-1; j>=0; j--){
-                if(j== minIdx || totalMoney == 0) break;
-
-
-                int currentPrice = price[sb.charAt(i)-'0'];
-                if(totalMoney+currentPrice >= price[j]){
-                    sb.setCharAt(i, (char)(j+'0'));
-                    totalMoney += currentPrice - price[j];
-                    break;
+        for (int i = 1; i <= N; i++) {
+            int curW = weight[i];
+            for (int j = 0; j <= total; j++) {
+                if (dp[i - 1][j]) {
+                    dp[i][j] = true;
+                    if (j + curW <= total) dp[i][j + curW] = true;
+                    dp[i][Math.abs(j - curW)] = true;
                 }
+            }
+        }
+    }
+
+    public static void solution() {
+        for (int i = 0; i < M; i++) {
+            int marble = marbles[i];
+            if (marble <= total && dp[N][marble]) {
+                sb.append("Y ");
+            } else {
+                sb.append("N ");
             }
         }
     }
