@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main{
+    
     static StringBuilder sb;
     static int N, L, P;
     static Node gasStation[];
